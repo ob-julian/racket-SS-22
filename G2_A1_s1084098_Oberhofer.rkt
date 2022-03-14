@@ -1,0 +1,102 @@
+;s12105875 Oberhofer Julian
+#lang racket
+(define (trenne) (displayln "---------------"))
+
+#|A1)
+Define a procedure sign that takes a number as its argument and returns 1 if the number is
+positive, -1 if the number is negative, and 0 if the number is zero.|#
+
+(define (sign x)
+  (cond ((< x 0) -1)
+        ((> x 0) 1)
+        ((= x 0) 0)))
+
+(sign 10)
+(sign 0)
+(sign -10)
+
+(trenne)
+
+#|A2)
+Define a procedure sumSquareSmaller that takes three numbers as arguments and returns the
+sum of the squares of the two smaller numbers.|#
+
+(define (sumSquareSmaller a b c)
+  (define d (sort (list a b c) <))
+  (define (square a) (* a a))
+  (+ (square (list-ref d 0)) (square (list-ref d 1))))
+
+(define (sumSquareSmaller2 a b c)
+  (- (+ (* a a) (* b b) (* c c)) (* (max a b c) (max a b c))))
+
+(sumSquareSmaller 10 20 42)
+(sumSquareSmaller2 10 20 42)
+(sumSquareSmaller 2 3 1)
+(sumSquareSmaller2 2 3 1)
+
+(trenne)
+
+#|A3)
+a) Implement a procedure areaRect that calculates the area of a rectangle. The procedure takes 2
+arguments called length and width. E.g., (areaRect 3 4) shall return 12.
+b) Likewise, implement a procedure circumferenceCircle that takes the radius of a circle and
+calculates its circumference. Make use of the built-in constant pi.|#
+
+;a)
+(define (areaRect l w)
+  (* l w))
+
+(areaRect 3 4)
+(areaRect 4 3)
+
+;b)
+(define (circumferenceCircle r)
+  (* 2 pi r))
+
+(circumferenceCircle 63)
+(circumferenceCircle 1)
+
+(trenne)
+
+#|A4)
+a) Implement a procedure mynot that behaves like the built-in not (without however using the
+buit-in not operation). E.g., (mynot (> 3 4)) shall return #t.
+In contrast to not, and as well as or cannot be implemented as procedures. Racket implements
+them as special-forms, in order to achieve (so-called) short-circuit-evaluation.
+Give examples that demonstrates the short-circuit-evaluation for and/or|#
+
+;a)
+(define (mynot a)
+  (if a
+  #f
+  #t))
+
+(mynot (> 3 4))
+(not (> 3 4))
+(mynot #t)
+(mynot #f)
+(mynot 12345)
+(not 12345)
+(displayln '---)
+;b))
+(define (p) (p))
+(or #t (p));endet nicht in einer endlos rekursion da nach dem #t prüfen das or true ist und nicht mehr false ergeben kann. Somit wird ducrch short-circuit-evaluation das or an der stelle mit true beendet.
+(and #f (p));selbes wie or nur das false und true/false wieder um false ergbit und damit die short-circuit-evaluation auslöst.
+
+(trenne)
+
+#|A5)
+Implement a procedure countUp such that (countUp 5) produces the output: 0 1 2 3 4 5
+|#
+(define (print x)
+ (displayln x))
+
+(define (countUpFromTo y x)
+    (cond ((= y x) (print x))
+          (else (print y)
+                (countUpFromTo (+ y 1) x))))
+
+(define (countUp x)
+  (countUpFromTo 0 x))
+
+(countUp 5)

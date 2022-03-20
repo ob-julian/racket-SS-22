@@ -11,16 +11,16 @@ Bonus: Come up with a better strategy for testing if a guess is good-enough.|#
 (define (cuberoot x)
   (define (cube x) (* x x x))
   (define (good-enough? guess)
-    (< (abs (- (cube guess) x)) 0.000001))
+    (< (abs (- (cube guess) x)) 0.00000001))
   (define (improve guess)
     (/(+ (* guess 2) (/ x (* guess guess))) 3))
   (define (cuber-iter guess)
-    (cond ((good-enough? (exact->inexact guess))
-          (exact->inexact guess))
+    (cond ((good-enough? (round guess))
+          (round guess))
          ((good-enough? guess)
           guess)
         (else (cuber-iter (improve guess)))))
-  (cuber-iter 1)
+  (cuber-iter 1.0)
   )
 
 (cuberoot 27)
@@ -130,7 +130,7 @@ Testplatz:
 
 |#
 
-;was passiert, ist das die übergebenen segmente ausgewertet werden bevor die function mynot ausgeführt wird, das heist ,dass jedes mal wenn myif aufgerufen wird geprüft wird ob der versuch gut genug ist und die neu iteration der recursion wird aufgerufen (noch bevor überhaupt versucht wird my selbst auszuführen), damit wird die recursion auch aufgrerufen wenn die recursion theoretisch schon die abbruch bedingung erfüllt hat. -> endlosschleife
+;Erklärung: was passiert, ist das die übergebenen segmente ausgewertet werden bevor die function mynot ausgeführt wird, das heist ,dass jedes mal wenn myif aufgerufen wird geprüft wird ob der versuch gut genug ist und die neu iteration der recursion wird aufgerufen (noch bevor überhaupt versucht wird my selbst auszuführen), damit wird die recursion auch aufgrerufen wenn die recursion theoretisch schon die abbruch bedingung erfüllt hat. -> endlosschleife
 
 
 #|5. Reformulate fib (discussed in the lecture: slide “Tree Recursion”) such that it describes an iterative
@@ -176,23 +176,26 @@ trace of the two versions. Make performance comparisons (using void and time).|#
 (time (void(fib3 380000))) ;zeit: 30-40 milisec
 
 ;suche nach 2 sec limit:
-;(time (void(fib3 8000000)))
+;(time (void(fib3 (expt 2 23)))) ;8388608
+
 
 (define (fib4 x) ;fib Zahlen für alle jetzt
   (define (fib-in y z a)
-    (cond ((<= a 2) y);(if (= (modulo x 2) 0) z y))
-          ((integer? (/ a 2)) (fib-in (+ (expt y 2) (expt z 2)) (* z (- (* 2 y) z)) (/ a 2)))
+    (cond ((<= a 2) (if (= (modulo x 2) 0) z y)); y)
+          ((integer? (/ a 10)) (fib-in (+ (expt y 2) (expt z 2)) (* z (- (* 2 y) z)) (/ a 10)))
           (else (fib-in (+ y z) y (- a 1)))))
-  (trace fib-in)
+  ;(trace fib-in)
+  (define (idea x [y 1])
+    (cond ((<= x 1) y)
+         ((integer? (/ x 2)) (idea (/ x 2) (* y 10)))
+         (else (idea (- x 1) (+ y 1)))))
   (if (<= x 0) 1
-      (fib-in 1 1 x)))
+      (fib-in 1 1 (idea x))))
+;(trace fib4)
 
-(fib4 1)
-(fib4 2)
-(fib4 3)
-(fib4 4)
-(fib4 5)
-(fib4 6)
-(fib4 7)
-(fib4 100)
+;(= (fib2 380000) (fib4 380000))
 
+(time (void(fib4 380000))) ;auch nur 30-40 millisec
+
+;suche nach 2 sec limit:
+;(time (void(fib4 9000000))) ;etwa geich schnell wie fib3

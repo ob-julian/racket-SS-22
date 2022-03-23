@@ -15,19 +15,20 @@ Bonus: Come up with a better strategy for testing if a guess is good-enough.|#
   (define (improve guess)
     (/(+ (* guess 2) (/ x (* guess guess))) 3))
   (define (cuber-iter guess)
-    (cond ((good-enough? (round guess))
-          (round guess))
+    (cond #|((good-enough? (round guess))
+          (round guess))|#
          ((good-enough? guess)
           guess)
         (else (cuber-iter (improve guess)))))
   (cuber-iter 1.0)
-  )
+  );verbessern entweder stadt 0.001 (* x 0.001)
+   ; oder indem man die letzten 2 ergebnise vergleicht und den unterschied vergleicht.
 
 (cuberoot 27)
 
 (trenne)
 
-#|Does sqrt-iter (discussed in the lecture) describe a recursive or an iterative process? Explain (as
+#|2. Does sqrt-iter (discussed in the lecture) describe a recursive or an iterative process? Explain (as
 Racket comments). Substantiate your answer by tracing the calls (using trace).|#
 
 (define (sqrt-iter guess x)
@@ -147,6 +148,10 @@ trace of the two versions. Make performance comparisons (using void and time).|#
   (cond ((or (<= x 2) (<= x c)) y);ignoring wrong inputs like negativs and decimal places and 0. 
         (else (fib2 x (+ y z) y (add1 c) ))))
 
+(define (fib22 x [y 1] [z 0])
+  (cond ((= x 1) y);ignoring wrong inputs like negativs and decimal places and 0. 
+        (else (fib22 (sub1 x) (+ y z) y))))
+
 (time (void (fib2 38))) ;"läckerliche" ~0 millisec computing time
 
 ;lets push "limits":
@@ -167,7 +172,7 @@ trace of the two versions. Make performance comparisons (using void and time).|#
 (trenne)
 ;(trace fib3)
 
-#|(fib3 1)
+#|(fib3 1)gh3
 (fib3 2)
 (fib3 3)
 (fib3 4)

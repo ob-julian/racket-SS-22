@@ -96,24 +96,53 @@ number.|#
 ; konstruktor und 
 ;also datenstucktur reicht ein cons aus weil man mint (cons x y) die Komplexe Zahl als: x+yi darstellen kann.
 
-(define (mycons x y)
+(define (make-complex-number x y)
   (λ (m) (m x y)))
 
-(define (mycar z)
+(define (real-part z)
   (z (λ (p q) p)))
 
-(define (mycdr z)
+(define (imaginary-part z)
   (z (λ (p q) q)))
 
 (define (add-complex c1 c2)
-  (mycons (+ (mycar c1) (mycar c2)) (+ (mycdr c1) (mycdr c2))))
+  (make-complex-number (+ (real-part c1) (real-part c2)) (+ (imaginary-part c1) (imaginary-part c2))))
 
 (define (print c)
-  (if (= 0 (mycar c)) (void) (display (mycar c))) (cond ((= 0 (mycdr c)) (void)) (else (if (and (> (mycdr c) 0) (not (= 0 (mycar c)))) (display '+) (void)) (display (mycdr c)) (display 'i))))
+  (if (= 0 (real-part c))
+      (void)
+      (display (real-part c)))
+  (cond ((= 0 (imaginary-part c)) (void))
+        (else
+         (if (and (> (imaginary-part c) 0) (not (= 0 (real-part c))))
+             (display '+)
+             (void))
+         (if (= (imaginary-part c) 1)
+             (void)
+             (if (= (imaginary-part c) (- 1))
+                 (display '-)
+                 (display (imaginary-part c))
+                 )
+             )
+         (display 'i)
+         )
+        )
+  (newline)
+  )
 
-(print (add-complex (mycons 1 4) (mycons 2 3)))
-(println void )
-(print (mycons 0 1))
+(print (make-complex-number 1 1))
+(print (make-complex-number 0 1))
+(print (make-complex-number 0 0))
+(print (make-complex-number 1 0))
+(println '-----)
+(print (make-complex-number -1 -1))
+(print (make-complex-number -0 -1))
+(print (make-complex-number -0 -0))
+(print (make-complex-number -1 -0))
+
+
+(print (add-complex (make-complex-number 1 4) (make-complex-number 2 3)))
+
 
 
 

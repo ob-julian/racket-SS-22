@@ -53,7 +53,7 @@ scoping to minimize the number of parameters (see subsection “Internal definit
 structure” in SICP chapter 1.1.8).|#
 
 (define (powerCloseTo b n [e 1])
-  (if (and (> b 0) (> n 0) (<= (expt b e) n))
+  (if (and (> b 1) (> n 0) (<= (expt b e) n))
       (powerCloseTo b n (add1 e))
       e)) 
 

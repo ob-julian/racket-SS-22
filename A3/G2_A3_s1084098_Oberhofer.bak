@@ -1,0 +1,6 @@
+;s12105875 Oberhofer Julian
+#lang racket
+
+(require racket/trace)
+
+(define (trenne) (displayln "---------------"))

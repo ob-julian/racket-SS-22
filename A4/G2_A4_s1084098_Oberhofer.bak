@@ -1,0 +1,16 @@
+;s1084098 Oberhofer Julian
+#lang racket
+
+(require racket/trace)
+
+(define (trenne) (displayln "---------------"))
+
+#|1.
+Implement the procedure (mylast xs). It shall return the last element in the given list xs.|#
+
+(define (mylast xs)
+  (if (null? (rest xs))
+      (first xs)
+      (mylast (rest xs))))
+
+(mylast (list 1 2 3)) ;3

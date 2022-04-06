@@ -36,7 +36,7 @@ returns a new list by applying op on the elements with matching index. We can as
 (define (combine os xs ys)
   (if (null? xs)
       null
-      (append (list (os (first xs) (first ys))) (combine os (rest xs) (rest ys)))))
+      (append (list (os (first xs) (first ys))) (combine os (rest xs) (rest ys))))) ; (append (list x) (y z)) kann einfacher als (cons x (y z) geschrieben werden
 
 
 (define (combineIter os xs ys (i null))
@@ -133,7 +133,7 @@ reputation of performing very inefficiently.|#
                (car xs)
                x))))
 
-(define (myMin x (y +inf.0))
+(define (myMin x (y +inf.0));besser (y (car x))
              (cond ((null? x)
                     y)
                    ((< (first x) y)

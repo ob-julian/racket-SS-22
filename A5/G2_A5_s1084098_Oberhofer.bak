@@ -1,0 +1,18 @@
+;s1084098 Oberhofer Julian
+#lang racket
+
+(require racket/trace)
+
+(define (trenne) (displayln "---------------"))
+
+#|1. Write two procedures checkProp and checkPropOneLine. Both procedures shall take a list of items
+and a predicate, i.e. a procedure that returns a boolean value (e.g. even?). It shall return a new list that
+contains the corresponding boolean values that indicate whether or not the property holds for the
+respective element (i.e., if the predicate evaluates to #t or #f). The implementation (body) of
+checkPropOneLine shall be a single line of code and may use built-in procedures such as range, filter,
+map. CheckProp must not use range, filter, map, or checkPropOneLine.|#
+
+(define (checkProp op l)
+  (if (null? (cdr l))
+      null
+      (cons (op (car l)) (checkProp op (cdr l)))))

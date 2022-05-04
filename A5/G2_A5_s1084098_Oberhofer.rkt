@@ -77,7 +77,11 @@ are even and greater than 20.|#
 (define (countEvenGreater20 l)
   (foldr (λ (x y) (add1 y)) 0 (filter even? (filter (λ (x) (>= x 20)) l))))
 
+(define (countEvenGreater20B l)
+  (length (filter (λ (x) (and (> x 20) (even? x))) l)))
+
 (countEvenGreater20 (list 1 4 22 24 26 33 -44)) ;3
+(countEvenGreater20B (list 1 4 22 24 26 33 -44)) ;3
 
 #|b. Write a procedure sumEvenGreater20 takes a list of values and returns the sum of the values that are
 even and greater than 20.|#

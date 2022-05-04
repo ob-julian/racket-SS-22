@@ -14,14 +14,16 @@ examples to check your implementation of the further assignments.|#
 (define t4 (list 1 2 3 4 5 6 7 8))
 (define t5 (list (list (list (list (list 1 2) 3) 4 5) 6) 7))
 
+(trenne)
+
 ;2. Compare the function accumulate-tree with “accumulate” (foldr):
 (define (accumulate-tree tree term op init)
   (cond ((null? tree) init)
        ((not (pair? tree)) (term tree))
        (else (op (accumulate-tree (car tree) term op init)
                  (accumulate-tree (cdr tree) term op init)))))
+  ;accumulate-tree geht auch alle inneren Listen ab, accumulate tut das nicht
 
-(trenne)
 
 ;Use accumulate-tree to implement sum and count such that:
 
@@ -110,6 +112,10 @@ operations (map, append, length) as accumulations (using foldr):
 (nestingLevel (list 1 (list 2 (list 3 4)))) ;3
 (nestingLevel (list (list 1 2) (list 3 4))) ;2
 
-
+(nestingLevel t1) ;3
+(nestingLevel t2) ;2
+(nestingLevel t3) ;3
+(nestingLevel t4) ;1
+(nestingLevel t5) ;5
 
 

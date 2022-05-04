@@ -93,3 +93,23 @@ operations (map, append, length) as accumulations (using foldr):
 
 (length (list 1 2 3 4 5 6 7 8 9))
 (mylength (list 1 2 3 4 5 6 7 8 9))
+
+(trenne)
+
+;5. Write a procedure (nestingLevel xs) that determines how deeply nested xs is.
+
+(define (nestingLevel xs (d 0))
+  (cond ((null? xs) d)
+        ((not (list? xs)) 0)
+        (else (max (add1 (nestingLevel (car xs) d)) (nestingLevel (cdr xs) d)))))
+
+;(trace nestingLevel)
+
+(nestingLevel (list 1 2 3)) ;1 (no nesting, just the top-level list)
+(nestingLevel (list (list 1 2) 3 4)); 2 (inner list in top-level list)
+(nestingLevel (list 1 (list 2 (list 3 4)))) ;3
+(nestingLevel (list (list 1 2) (list 3 4))) ;2
+
+
+
+

@@ -55,6 +55,12 @@ append could be helpful.|#
   (cond ((null? t) l)
         ((not (pair? t)) (list t))
         (else (append (leaflist (car t) l) (leaflist (cdr t) l) l))))
+
+;EineZeiler:
+
+(define (leaflist2 t)
+  (accumulate-tree t list append null))
+
 ;(trace leaflist)
 
 (define x (list (list 1 2) (list 3 4)))
@@ -65,6 +71,12 @@ append could be helpful.|#
 (leaflist t3) ;'(1 2 3 4 5 6 7 8)
 (leaflist t4) ;'(1 2 3 4 5 6 7 8)
 (leaflist t5) ;'(1 2 3 4 5 6 7)
+
+(leaflist2 t1) ;'(1 2 3 4 5 6 7)
+(leaflist2 t2) ;'(1 2 3 4 5 6 7 8)
+(leaflist2 t3) ;'(1 2 3 4 5 6 7 8)
+(leaflist2 t4) ;'(1 2 3 4 5 6 7 8)
+(leaflist2 t5) ;'(1 2 3 4 5 6 7)
 
 (trenne)
 
@@ -100,10 +112,9 @@ operations (map, append, length) as accumulations (using foldr):
 
 ;5. Write a procedure (nestingLevel xs) that determines how deeply nested xs is.
 
-(define (nestingLevel xs (d 0))
-  (cond ((null? xs) d)
-        ((not (list? xs)) 0)
-        (else (max (add1 (nestingLevel (car xs) d)) (nestingLevel (cdr xs) d)))))
+(define (nestingLevel xs)
+  (cond ((not (pair? xs)) 0)
+        (else (max (add1 (nestingLevel (car xs))) (nestingLevel (cdr xs))))))
 
 ;(trace nestingLevel)
 

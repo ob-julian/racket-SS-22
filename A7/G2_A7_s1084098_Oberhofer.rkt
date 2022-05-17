@@ -94,8 +94,11 @@ of possibilities not in visualization.|#
 
 (require math/number-theory)
 
+;(define (countstairs n)
+;  (foldr + 0 (map (λ (x) (binomial (- n x) x)) (range 0 (+ 1 (floor (/ n 2)))))))
+
 (define (countstairs n)
-  (foldr + 0 (map (λ (x) (binomial (- n x) x)) (range 0 (+ 1 (floor (/ n 2)))))))
+  (fib-mem (add1 n))
 
 (map countstairs (range 1 15)) ;'(1 2 3 5 8 13 21 34 55 89 144 233 377 610)
 (map fib-mem (range 2 16))

@@ -25,7 +25,7 @@ procedure (rain xs) that solves the rainfall problem.|#
 
 (require math/statistics)
 (define (rain xs)
-  (mean (for/list ((l xs)  #:break (= l -999) #:when (> l 0)) l)))
+  (mean (for/list ((l xs)  #:break (= l -999) #:when (>= l 0)) l)))
 
 (rain (list 1 2 -100 -999 1000)) ;1.5
 

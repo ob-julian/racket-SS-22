@@ -155,7 +155,7 @@ make two versions: a) with, b) without short-circuit evaluation.
         ((pair? exp) (mc-apply (mc-eval (car exp) env) (list-of-values (cdr exp) env)))
         (else (error "Unknown expression type -- EVAL" exp))))|#
 
-;Ansatz 2
+;Ansatz 1
 
 (define (mc-eval-logic exp [env null])
   (cond ((number? exp) exp)
